@@ -74,10 +74,10 @@ Format your response as a single, detailed paragraph without any prefixes or exp
                 input={
                     "prompt": enhanced_prompt,
                     "negative_prompt": "blurry, low quality, distorted, ugly, bad anatomy, extra limbs, watermark, text, timestamp, duplicate, double image, pixelated",
-                    "width": 1024,
-                    "height": 576,
-                    "fps": 24,
-                    "num_frames": 120,  # 5 seconds at 24fps
+                    "width": 576,
+                    "height": 320,
+                    "fps": 12,
+                    "num_frames": 24,
                     "guidance_scale": 12.5,
                     "num_inference_steps": 50
                 }
