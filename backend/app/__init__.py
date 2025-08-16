@@ -8,4 +8,12 @@ load_dotenv()
 app = FastAPI(title="Video Generation API")
 
 # Configure CORS
-# CORS headers are handled directly in the routes
+# Configure CORS with all necessary headers
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
+    expose_headers=["*"]
+)
