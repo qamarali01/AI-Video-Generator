@@ -68,18 +68,19 @@ Format your response as a single, detailed paragraph without any prefixes or exp
             enhanced_prompt = await self.enhance_prompt(prompt)
             print(f"Using enhanced prompt: {enhanced_prompt}")
             
-            # Use Zeroscope v2 XL for video generation
+            # Use AnimateDiff base model (more cost-effective)
             output = replicate.run(
-                "anotherjesse/zeroscope-v2-xl:71996d331e8ede8ef7bd76eba9fae076d31792e4ddf4ad057779b443d6efe659",
+                "lucataco/animate-diff:cdcd2c66589c8a990e4024b1dc6fedcec4f4c0a41b5c1c6f0d5c46a0c1c2f2c8",
                 input={
                     "prompt": enhanced_prompt,
-                    "negative_prompt": "blurry, low quality, distorted, ugly, bad anatomy, extra limbs, watermark, text, timestamp, duplicate, double image, pixelated",
-                    "width": 1024,
-                    "height": 576,
-                    "fps": 24,
-                    "num_frames": 24,
-                    "guidance_scale": 12.5,
-                    "num_inference_steps": 50
+                    "negative_prompt": "blurry, low quality, distorted, ugly, bad anatomy, extra limbs, watermark, text",
+                    "num_inference_steps": 15,  # Lower for faster generation
+                    "guidance_scale": 7.5,
+                    "width": 512,
+                    "height": 512,
+                    "num_frames": 16,
+                    "num_videos": 1,
+                    "fps": 8
                 }
             )
             
