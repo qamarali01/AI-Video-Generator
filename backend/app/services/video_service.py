@@ -68,19 +68,24 @@ Format your response as a single, detailed paragraph without any prefixes or exp
             enhanced_prompt = await self.enhance_prompt(prompt)
             print(f"Using enhanced prompt: {enhanced_prompt}")
             
-            # Use AnimateDiff base model (more cost-effective)
+            # Use official Stable Video Diffusion model
             output = replicate.run(
-                "lucataco/animate-diff:cdcd2c66589c8a990e4024b1dc6fedcec4f4c0a41b5c1c6f0d5c46a0c1c2f2c8",
+                "stability-ai/stable-video-diffusion:3d00aa9e6d38f25af51c53b0a7d0b5e137c2224a0c8db0d8e8d320040bbbc5df",
                 input={
                     "prompt": enhanced_prompt,
                     "negative_prompt": "blurry, low quality, distorted, ugly, bad anatomy, extra limbs, watermark, text",
-                    "num_inference_steps": 15,  # Lower for faster generation
-                    "guidance_scale": 7.5,
-                    "width": 512,
-                    "height": 512,
-                    "num_frames": 16,
-                    "num_videos": 1,
-                    "fps": 8
+                    "video_length": "14_frames_with_svd",
+                    "sizing_strategy": "maintain_aspect_ratio",
+                    "frames": 14,
+                    "width": 576,
+                    "height": 320,
+                    "motion_bucket_id": 127,
+                    "cond_aug": 0.02,
+                    "decoding_t": 14,
+                    "num_inference_steps": 25,
+                    "min_guidance_scale": 1.0,
+                    "max_guidance_scale": 3.0,
+                    "seed": 42
                 }
             )
             
@@ -110,10 +115,18 @@ Format your response as a single, detailed paragraph without any prefixes or exp
             }
 
         except Exception as e:
-            print(f"Video generation error: {str(e)}")
+            error_msg = f"Video generation error: {str(e)}"
+            print(error_msg)
+            print(f"Error type: {type(e)}")
+            print(f"Error details: {repr(e)}")
+            
+            if hasattr(e, 'response'):
+                print(f"Response status: {e.response.status_code}")
+                print(f"Response body: {e.response.text}")
+            
             return {
                 "status": "error",
-                "message": str(e),
+                "message": error_msg,
                 "videoUrl": None,
                 "generationDetails": None
             }
