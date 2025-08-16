@@ -4,6 +4,16 @@ import axios from 'axios'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 
+// Configure axios defaults
+const api = axios.create({
+  baseURL: API_URL,
+  headers: {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+  },
+  withCredentials: false // Important for CORS
+})
+
 interface GeneratedVideo {
   prompt: string
   url: string
@@ -24,7 +34,7 @@ function App() {
     setError('')
 
     try {
-      const response = await axios.post(`${API_URL}/api/generate-video`, {
+      const response = await api.post('/api/generate-video', {
         prompt: prompt.trim()
       })
 
