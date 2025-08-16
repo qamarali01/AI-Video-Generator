@@ -68,20 +68,18 @@ Format your response as a single, detailed paragraph without any prefixes or exp
             enhanced_prompt = await self.enhance_prompt(prompt)
             print(f"Using enhanced prompt: {enhanced_prompt}")
             
-            # Use Deforum Stable Diffusion (original working model)
+            # Use Zeroscope v2 XL (known working version)
             output = replicate.run(
-                "deforum/deforum_stable_diffusion:e22e77495f2fb83c34d5fae2ad8ab63c0a87b6b573b6208e1535b23b89ea66d6",
+                "anotherjesse/zeroscope-v2-xl:9f747673945c62801b13b84701c783929c0ee784e4748ec062204894dda1a351",
                 input={
-                    "animation_prompts": enhanced_prompt,
+                    "prompt": enhanced_prompt,
                     "negative_prompt": "blurry, low quality, distorted, ugly, bad anatomy, extra limbs, watermark, text, timestamp, duplicate, double image, pixelated",
-                    "width": 512,
-                    "height": 512,
-                    "num_inference_steps": 25,
-                    "guidance_scale": 7.5,
-                    "animation_mode": "3D",
-                    "max_frames": 50,
+                    "width": 576,
+                    "height": 320,
                     "fps": 12,
-                    "border": "wrap"
+                    "num_frames": 24,
+                    "guidance_scale": 12.5,
+                    "num_inference_steps": 50
                 }
             )
             
