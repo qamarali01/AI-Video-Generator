@@ -1,121 +1,98 @@
-# AI Video Generation Web App
+# AI Video Generator
 
-This web application generates short videos based on text prompts using AI technology. It provides a simple interface for users to input their creative ideas and receive AI-generated videos in response.
+Transform your ideas into stunning videos using AI. This web application allows users to generate videos from text descriptions using advanced AI models.
+
+## Live Demo
+
+- Frontend: [https://ai-video-generator-six-delta.vercel.app](https://ai-video-generator-six-delta.vercel.app)
+- Backend API: [https://ai-video-generator-vtqv.vercel.app](https://ai-video-generator-vtqv.vercel.app)
 
 ## Features
 
 - Text-to-video generation using AI
-- Modern, responsive web interface
-- Real-time generation status updates
-- Secure API key handling
-- Cloud deployment
+- Real-time video generation status
+- Modern, responsive UI
+- Video history display
+- Error handling and loading states
 
 ## Tech Stack
 
-- Frontend: React + TypeScript + Vite + Tailwind CSS
-- Backend: FastAPI (Python)
-- AI Provider: Pika Labs
-- Deployment: Vercel
+### Frontend
+- React with TypeScript
+- Vite for build tooling
+- Tailwind CSS for styling
+- Axios for API communication
+- Heroicons for icons
 
-## Project Structure
+### Backend
+- FastAPI (Python)
+- OpenRouter API (Qwen 2.5) for prompt enhancement
+- Replicate API (Deforum Stable Diffusion) for video generation
+- Custom CORS middleware
+- Environment variable configuration
 
-```
-peppo/
-├── frontend/           # React frontend application
-├── backend/           # FastAPI backend server
-├── .env.example       # Example environment variables
-├── README.md         # Project documentation
-└── .gitignore       # Git ignore rules
-```
-
-## Getting Started
+## Local Development
 
 ### Prerequisites
+- Node.js (v18+)
+- Python (v3.9+)
+- API keys for OpenRouter and Replicate
 
-- Node.js (v18 or higher)
-- Python (v3.9 or higher)
-- pnpm (recommended) or npm
+### Frontend Setup
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
-### Local Development Setup
+### Backend Setup
+```bash
+cd backend
+python -m venv venv
+source venv/bin/activate  # On Windows: .\venv\Scripts\activate
+pip install -r requirements.txt
+python run.py
+```
 
-1. Clone the repository:
-   ```bash
-   git clone <repository-url>
-   cd peppo
-   ```
+### Environment Variables
 
-2. Set up environment variables:
-   ```bash
-   cp .env.example .env
-   # Edit .env with your API keys and configuration
-   ```
-
-3. Frontend setup:
-   ```bash
-   cd frontend
-   pnpm install
-   pnpm dev
-   ```
-
-4. Backend setup:
-   ```bash
-   cd backend
-   python -m venv venv
-   source venv/bin/activate  # On Windows: .\venv\Scripts\activate
-   pip install -r requirements.txt
-   uvicorn main:app --reload
-   ```
-
-## Environment Variables
-
-Create a `.env` file in the root directory with the following variables:
-
-```env
-# Backend
-PIKA_API_KEY=your_pika_api_key
-CORS_ORIGINS=http://localhost:5173
-
-# Frontend
+Frontend (.env):
+```
 VITE_API_URL=http://localhost:8000
 ```
 
-## API Documentation
-
-The backend API provides the following endpoints:
-
-- `POST /api/generate-video`
-  - Generates a video from a text prompt
-  - Request body: `{ "prompt": "string" }`
-  - Returns: Video URL or generation status
+Backend (.env):
+```
+OPENROUTER_API_KEY=your_key_here
+REPLICATE_API_TOKEN=your_token_here
+CORS_ORIGINS=http://localhost:5173
+```
 
 ## Deployment
 
-This application is deployed using Vercel. Follow these steps for deployment:
+The application is deployed on Vercel:
 
-1. Frontend deployment:
-   - Connect your GitHub repository to Vercel
-   - Configure build settings and environment variables
-   - Deploy
+1. Frontend:
+   - Framework: Vite
+   - Build Command: `npm run build`
+   - Output Directory: `dist`
+   - Environment Variables: Set `VITE_API_URL` to backend URL
 
-2. Backend deployment:
-   - Use Vercel's Python runtime
-   - Configure environment variables
-   - Deploy
+2. Backend:
+   - Framework: Python
+   - Build Command: None (uses vercel.json)
+   - Environment Variables: Set API keys and CORS origins
 
-## Security
+## API Endpoints
 
-- API keys are stored securely using environment variables
+- `GET /`: Health check endpoint
+- `POST /api/generate-video`: Generate video from text prompt
+  - Request body: `{ "prompt": "string" }`
+  - Response: `{ "videoUrl": "string", "generationDetails": "string" }`
+
+## Security Considerations
+
+- API keys are stored securely in environment variables
 - CORS is configured to allow only specific origins
-- Rate limiting is implemented to prevent abuse
-
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
+- Input validation on both frontend and backend
+- Error handling for failed API calls
