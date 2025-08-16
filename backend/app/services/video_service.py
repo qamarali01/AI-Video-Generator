@@ -68,19 +68,19 @@ Format your response as a single, detailed paragraph without any prefixes or exp
             enhanced_prompt = await self.enhance_prompt(prompt)
             print(f"Using enhanced prompt: {enhanced_prompt}")
             
-            # Use AnimateDiff for better quality and reliability
+            # Use Deforum Stable Diffusion for video generation
             output = replicate.run(
-                "lucataco/animate-diff:beecf59c4aee8d81bf04f0381033a80b67d4b1e6535f2a332f68bc4ce34c92fd",
+                "deforum/deforum_stable_diffusion:e22e77495f2fb83c34d5fae2ad8ab63c0a87b6b573b6208e1535b23b89ea66d6",
                 input={
-                    "prompt": enhanced_prompt,
-                    "negative_prompt": "blurry, low quality, distorted, ugly, bad anatomy, extra limbs, watermark, text, timestamp, duplicate, double image, pixelated",
-                    "num_inference_steps": 20,
-                    "guidance_scale": 7.5,
+                    "animation_prompts": enhanced_prompt,
+                    "negative_prompts": "blurry, low quality, distorted, ugly, bad anatomy, extra limbs, watermark, text, timestamp, duplicate, double image, pixelated",
                     "width": 512,
                     "height": 512,
-                    "num_frames": 16,
-                    "num_videos": 1,
-                    "fps": 8
+                    "num_inference_steps": 25,
+                    "guidance_scale": 7.5,
+                    "fps": 10,
+                    "max_frames": 50,
+                    "border": "replicate"
                 }
             )
             
