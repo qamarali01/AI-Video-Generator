@@ -28,10 +28,11 @@ function App() {
         prompt: prompt.trim()
       })
 
-      if (response.data.videoUrl) {
+      console.log('API Response:', response.data)  // Add logging
+      if (response.data.videoUrl || response.data.url) {
         setGeneratedVideos(prev => [{
           prompt: prompt.trim(),
-          url: response.data.videoUrl,
+          url: response.data.videoUrl || response.data.url,
           timestamp: Date.now()
         }, ...prev])
         setPrompt('')
