@@ -36,7 +36,14 @@ class VideoService:
                     "messages": [
                         {
                             "role": "system",
-                            "content": "You are a professional video director. Convert user prompts into detailed video generation prompts that will result in high-quality, cinematic videos."
+                            "content": """You are a professional video director specializing in AI video generation. Convert user prompts into detailed, cinematic prompts that will result in high-quality videos. Focus on:
+1. Visual style (cinematic, dramatic, artistic)
+2. Lighting conditions (golden hour, dramatic shadows, etc.)
+3. Camera movements (slow pan, aerial view, etc.)
+4. Color palette and mood
+5. Specific details that make the scene unique
+
+Format your response as a single, detailed paragraph without any prefixes or explanations. Focus purely on the visual description."""
                         },
                         {
                             "role": "user",
@@ -61,18 +68,23 @@ class VideoService:
             enhanced_prompt = await self.enhance_prompt(prompt)
             print(f"Using enhanced prompt: {enhanced_prompt}")
             
-            # Use Replicate's Zeroscope model for video generation
+            # Use Stable Video Diffusion for better quality
             output = replicate.run(
-                "anotherjesse/zeroscope-v2-xl:9f747673945c62801b13b84701c783929c0ee784e4748ec062204894dda1a351",
+                "stability-ai/stable-video-diffusion:3d00aa9e6d38f25af51c53b0a7d0b5e137c2224a0c8db0d8e8d320040bbbc5df",
                 input={
+                    "cond_aug": 0.02,
+                    "decoding_t": 7,
+                    "frames": 25,
+                    "height": 576,
+                    "width": 1024,
+                    "input_image": None,
+                    "motion_bucket_id": 127,
+                    "negative_prompt": "blurry, low quality, distorted, ugly, bad anatomy, extra limbs, watermark, text, timestamp, duplicate, double image, pixelated",
+                    "num_inference_steps": 50,
                     "prompt": enhanced_prompt,
-                    "negative_prompt": "blurry, low quality, distorted, ugly, bad anatomy, extra limbs",
-                    "num_frames": 24,
-                    "fps": 12,
-                    "width": 576,
-                    "height": 320,
-                    "guidance_scale": 17.5,
-                    "num_inference_steps": 50
+                    "seed": 42,
+                    "sizing_strategy": "maintain_aspect_ratio",
+                    "video_length": "25_frames_with_svd_xt"
                 }
             )
             
