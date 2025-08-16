@@ -4,8 +4,7 @@ Transform your ideas into stunning videos using AI. This web application allows 
 
 ## Live Demo
 
-- Frontend: [https://ai-video-generator-six-delta.vercel.app](https://ai-video-generator-six-delta.vercel.app)
-- Backend API: [https://ai-video-generator-vtqv.vercel.app](https://ai-video-generator-vtqv.vercel.app)
+- [https://ai-video-generator-six-delta.vercel.app](https://ai-video-generator-six-delta.vercel.app)
 
 ## Features
 
