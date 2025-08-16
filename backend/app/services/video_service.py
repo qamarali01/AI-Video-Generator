@@ -68,30 +68,39 @@ Format your response as a single, detailed paragraph without any prefixes or exp
             enhanced_prompt = await self.enhance_prompt(prompt)
             print(f"Using enhanced prompt: {enhanced_prompt}")
             
-            # Use Stable Video Diffusion for better quality
+            # Use AnimateDiff for better quality and reliability
             output = replicate.run(
-                "stability-ai/stable-video-diffusion:3d00aa9e6d38f25af51c53b0a7d0b5e137c2224a0c8db0d8e8d320040bbbc5df",
+                "lucataco/animate-diff:beecf59c4aee8d81bf04f0381033a80b67d4b1e6535f2a332f68bc4ce34c92fd",
                 input={
-                    "cond_aug": 0.02,
-                    "decoding_t": 7,
-                    "frames": 25,
-                    "height": 576,
-                    "width": 1024,
-                    "input_image": None,
-                    "motion_bucket_id": 127,
-                    "negative_prompt": "blurry, low quality, distorted, ugly, bad anatomy, extra limbs, watermark, text, timestamp, duplicate, double image, pixelated",
-                    "num_inference_steps": 50,
                     "prompt": enhanced_prompt,
-                    "seed": 42,
-                    "sizing_strategy": "maintain_aspect_ratio",
-                    "video_length": "25_frames_with_svd_xt"
+                    "negative_prompt": "blurry, low quality, distorted, ugly, bad anatomy, extra limbs, watermark, text, timestamp, duplicate, double image, pixelated",
+                    "num_inference_steps": 20,
+                    "guidance_scale": 7.5,
+                    "width": 512,
+                    "height": 512,
+                    "num_frames": 16,
+                    "num_videos": 1,
+                    "fps": 8
                 }
             )
             
             print(f"Replicate output: {output}")
             
-            # The output is usually a list with the video URL as the first element
-            video_url = output[0] if isinstance(output, list) and output else output
+            print(f"Raw output type: {type(output)}")
+            print(f"Raw output content: {output}")
+            
+            # Handle different response formats
+            if isinstance(output, list) and output:
+                video_url = output[0]
+            elif isinstance(output, dict) and 'output' in output:
+                video_url = output['output']
+            elif isinstance(output, str):
+                video_url = output
+            else:
+                raise ValueError(f"Unexpected output format: {output}")
+            
+            if not video_url:
+                raise ValueError("No video URL in the response")
             
             return {
                 "status": "success",
