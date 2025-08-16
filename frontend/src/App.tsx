@@ -11,8 +11,7 @@ const api = axios.create({
     'Content-Type': 'application/json',
     'Accept': 'application/json',
   },
-  withCredentials: false, // Important for CORS
-  validateStatus: (status) => status < 500 // Handle all non-500 responses
+  withCredentials: false // Important for CORS
 })
 
 interface GeneratedVideo {

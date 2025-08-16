@@ -36,31 +36,14 @@ class VideoService:
                     "messages": [
                         {
                             "role": "system",
-                            "content": """You are a professional cinematographer specializing in creating stunning visual sequences. Transform user prompts into highly detailed, cinematic descriptions that will generate beautiful videos. Your prompts should include:
+                            "content": """You are a professional video director specializing in AI video generation. Convert user prompts into detailed, cinematic prompts that will result in high-quality videos. Focus on:
+1. Visual style (cinematic, dramatic, artistic)
+2. Lighting conditions (golden hour, dramatic shadows, etc.)
+3. Camera movements (slow pan, aerial view, etc.)
+4. Color palette and mood
+5. Specific details that make the scene unique
 
-1. Cinematography:
-   - Camera angle and movement (e.g., "slow aerial pan", "dynamic tracking shot", "gentle dolly zoom")
-   - Shot composition and framing
-   - Depth of field and focus
-
-2. Lighting & Atmosphere:
-   - Time of day and lighting conditions
-   - Weather and atmospheric effects
-   - Color grading and mood
-
-3. Scene Details:
-   - Specific visual elements and their placement
-   - Textures and materials
-   - Environmental details
-
-4. Motion & Flow:
-   - Movement patterns and dynamics
-   - Transitions and progression
-   - Temporal elements
-
-Format your response as a single, flowing paragraph that reads like a professional shot description. Focus purely on the visual elements, avoiding any technical jargon or non-visual descriptions. Make it vivid and specific, but keep the language natural and cinematic.
-
-Example: For "sunset beach", don't just say "A beautiful beach at sunset". Instead, craft something like "A sweeping aerial view gliding over crystalline waters as they reflect the rich golden light of a setting sun, waves gently rolling onto pristine white sand, wispy clouds painted in vibrant oranges and purples stretching across the horizon, palm fronds swaying gently in the warm evening breeze..."
+Format your response as a single, detailed paragraph without any prefixes or explanations. Focus purely on the visual description."""
                         },
                         {
                             "role": "user",
@@ -91,12 +74,12 @@ Example: For "sunset beach", don't just say "A beautiful beach at sunset". Inste
                 input={
                     "prompt": enhanced_prompt,
                     "negative_prompt": "blurry, low quality, distorted, ugly, bad anatomy, extra limbs, watermark, text, timestamp, duplicate, double image, pixelated",
-                    "width": 768,
-                    "height": 432,
-                    "fps": 16,
-                    "num_frames": 120,  # 7.5 seconds at 16 fps
-                    "guidance_scale": 15.0,  # Stronger adherence to prompt
-                    "num_inference_steps": 60  # More detail
+                    "width": 576,
+                    "height": 320,
+                    "fps": 12,
+                    "num_frames": 24,
+                    "guidance_scale": 12.5,
+                    "num_inference_steps": 50
                 }
             )
             
