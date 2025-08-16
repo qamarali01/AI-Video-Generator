@@ -68,24 +68,20 @@ Format your response as a single, detailed paragraph without any prefixes or exp
             enhanced_prompt = await self.enhance_prompt(prompt)
             print(f"Using enhanced prompt: {enhanced_prompt}")
             
-            # Use official Stable Video Diffusion model
+            # Use Deforum Stable Diffusion (original working model)
             output = replicate.run(
-                "stability-ai/stable-video-diffusion:3d00aa9e6d38f25af51c53b0a7d0b5e137c2224a0c8db0d8e8d320040bbbc5df",
+                "deforum/deforum_stable_diffusion:e22e77495f2fb83c34d5fae2ad8ab63c0a87b6b573b6208e1535b23b89ea66d6",
                 input={
-                    "prompt": enhanced_prompt,
-                    "negative_prompt": "blurry, low quality, distorted, ugly, bad anatomy, extra limbs, watermark, text",
-                    "video_length": "14_frames_with_svd",
-                    "sizing_strategy": "maintain_aspect_ratio",
-                    "frames": 14,
-                    "width": 576,
-                    "height": 320,
-                    "motion_bucket_id": 127,
-                    "cond_aug": 0.02,
-                    "decoding_t": 14,
+                    "animation_prompts": enhanced_prompt,
+                    "negative_prompt": "blurry, low quality, distorted, ugly, bad anatomy, extra limbs, watermark, text, timestamp, duplicate, double image, pixelated",
+                    "width": 512,
+                    "height": 512,
                     "num_inference_steps": 25,
-                    "min_guidance_scale": 1.0,
-                    "max_guidance_scale": 3.0,
-                    "seed": 42
+                    "guidance_scale": 7.5,
+                    "animation_mode": "3D",
+                    "max_frames": 50,
+                    "fps": 12,
+                    "border": "wrap"
                 }
             )
             
